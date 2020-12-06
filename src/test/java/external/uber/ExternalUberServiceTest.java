@@ -5,6 +5,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -40,7 +41,7 @@ public class ExternalUberServiceTest {
   private GoogleMapsHelper googleMapsHelperMock;
   @Mock
   private RestTemplate restTemplateMock;
-  // @InjectMocks
+  @InjectMocks
   private ExternalUberService externalUberService;
 
   @Test
@@ -61,7 +62,7 @@ public class ExternalUberServiceTest {
     Double endLatitude = 37.775241;
     Double endLongitude = -122.518075;
 
-    ExternalUberService externalUberService = new ExternalUberService();
+    // ExternalUberService externalUberService = new ExternalUberService();
     String expectedUrl = "https://api.uber.com/v1.2/estimates/price"
         + "?start_latitude=37.775231&start_longitude=-122.418075" + "&end_latitude=37.775241&end_longitude=-122.518075";
 
@@ -73,29 +74,29 @@ public class ExternalUberServiceTest {
     assertEquals(expectedUrl, actualUrl);
   }
 
-  @Test
-  public void getPriceEstimatesWithoutMockTest() {
-    /*
-      This test will fail and is written to demo need of Mockito
-      Comment this out after checking it
-    */
+  // @Test
+  // public void getPriceEstimatesWithoutMockTest() {
+  //   /*
+  //     This test will fail and is written to demo need of Mockito
+  //     Comment this out after checking it
+  //   */
 
-    // Setup
-    Double startLatitude = 137.775231;
-    Double startLongitude = -122.418075;
-    Double endLatitude = 37.775241;
-    Double endLongitude = -122.518075;
+  //   // Setup
+  //   Double startLatitude = 137.775231;
+  //   Double startLongitude = -122.418075;
+  //   Double endLatitude = 37.775241;
+  //   Double endLongitude = -122.518075;
     
-    ExternalUberService externalUberService = new ExternalUberService();
+  //   ExternalUberService externalUberService = new ExternalUberService();
 
-    // Get output of the method under test
-    PriceEstimate[] actualPriceEstimates = externalUberService.getPriceEstimates(
-      startLatitude, startLongitude, endLatitude, endLongitude);
+  //   // Get output of the method under test
+  //   PriceEstimate[] actualPriceEstimates = externalUberService.getPriceEstimates(
+  //     startLatitude, startLongitude, endLatitude, endLongitude);
 
-    // Check if the returned value matches expected value
-    int expectedLength = 0;
-    assertEquals(expectedLength, actualPriceEstimates.length);
-  }
+  //   // Check if the returned value matches expected value
+  //   int expectedLength = 0;
+  //   assertEquals(expectedLength, actualPriceEstimates.length);
+  // }
 
   @Test
   public void getPriceEstimatesReturnsEmptyArrayOnInvalidStartLatitudeTest() {
@@ -124,13 +125,12 @@ public class ExternalUberServiceTest {
 
   // Setup mock to return preset value of false
   // when startLatitude parameter is 137.775231
-  ExternalUberService externalUberService = new ExternalUberService();
+  // ExternalUberService externalUberService = new ExternalUberService();
   externalUberService.setGoogleMapsHelper(googleMapsHelperMock);
 
   when(googleMapsHelperMock.isValidLocations(eq(137.775231), anyDouble(),
   anyDouble(), anyDouble()))
   .thenReturn(false);
-
   // get output of the method under test
   PriceEstimate[] actualPriceEstimates = externalUberService.getPriceEstimates(
   startLatitude, startLongitude, endLatitude, endLongitude);
@@ -172,9 +172,9 @@ public class ExternalUberServiceTest {
     PriceEstimate[] expectedPriceEstimates = loadPriceEstimateList();
     String url = "https://api.uber.com/v1.2/estimates/price?start_latitude=37.775231&start_longitude=-122.418075&end_latitude=37.775241&end_longitude=-122.518075";
 
-    ExternalUberService externalUberService = new ExternalUberService();
-    externalUberService.setGoogleMapsHelper(googleMapsHelperMock);
-    externalUberService.setRestTemplate(restTemplateMock);
+    // ExternalUberService externalUberService = new ExternalUberService();
+    // externalUberService.setGoogleMapsHelper(googleMapsHelperMock);
+    // externalUberService.setRestTemplate(restTemplateMock);
 
     Answer<Boolean> validity = new Answer<Boolean>() {
       public Boolean answer(InvocationOnMock invocation)
@@ -206,7 +206,7 @@ public class ExternalUberServiceTest {
   }
 
   // TODO: Uncomment in Milestone 6
-  /*
+  
   @Test
   public void getPriceEstimatesWithBugTest()
       throws JsonParseException, RestClientException, JsonMappingException, IOException {
@@ -262,10 +262,10 @@ public class ExternalUberServiceTest {
     assertEquals(url, actualUrl);
 
   }
-  */
+
 
   // TODO: Uncomment in Milestone 7
-  /*
+  
   @Test
   public void mockitoSetupErrorTest() {
 
@@ -280,14 +280,14 @@ public class ExternalUberServiceTest {
     ExternalUberService externalUberService = new ExternalUberService();
     externalUberService.setGoogleMapsHelper(googleMapsHelperMock);
 
-    when(googleMapsHelperMock.isValidLocations(137.775231, -122.418075, 37.775241, -122.518075))
-    .thenReturn(false);
+    // when(googleMapsHelperMock.isValidLocations(137.775231, -122.418075, 37.775241, -122.518075))
+    // .thenReturn(false);
     // when(googleMapsHelperMock.isValidLocations(any(), any(), any(), any()))
     // .thenReturn(false);
     // when(googleMapsHelperMock.isValidLocations(anyDouble(), anyDouble(), anyDouble(), anyDouble()))
     // .thenReturn(false);
-    // when(googleMapsHelperMock.isValidLocations(eq(137.775231), anyDouble(), anyDouble(), anyDouble()))
-    // .thenReturn(false);
+    when(googleMapsHelperMock.isValidLocations(eq(137.775231), anyDouble(), anyDouble(), anyDouble()))
+    .thenReturn(false);
 
     // get output of the method under test
     PriceEstimate[] actualPriceEstimates = externalUberService.getPriceEstimates(
@@ -297,10 +297,10 @@ public class ExternalUberServiceTest {
     int expectedLength = 0;
     assertEquals(expectedLength, actualPriceEstimates.length);
   }
-  */
+  
 
   // TODO: Uncomment in Milestone 7
-  /*
+  
   @Test
   public void unnecessaryStubbingExceptionTest() throws JsonParseException, JsonMappingException, IOException {
     Double startLatitude = 37.775231;
@@ -313,8 +313,8 @@ public class ExternalUberServiceTest {
         + "?start_latitude=37.775231&start_longitude=-122.418075" 
         + "&end_latitude=37.775241&end_longitude=-122.518075";
 
-    when(googleMapsHelperMock.isValidLocations(37.775231, -122.418075, 37.775241, -122.518075))
-        .thenReturn(true);
+    // when(googleMapsHelperMock.isValidLocations(37.775231, -122.418075, 37.775241, -122.518075))
+    //     .thenReturn(true);
 
     // Call the method under test
     String actualUrl = externalUberService.buildPriceEstimateBaseUrl(startLatitude, startLongitude, endLatitude,
@@ -323,7 +323,7 @@ public class ExternalUberServiceTest {
     // Check if the method output matches expected value
     assertEquals(expectedUrl, actualUrl);
   }
-  */
+  
 
 
   /*

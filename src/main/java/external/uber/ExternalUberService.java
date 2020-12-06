@@ -66,7 +66,7 @@ public class ExternalUberService {
   }
 
   // TODO: Uncomment in Milestone 6
-  /*
+  
   public PriceEstimate[] getPriceEstimatesWithBug(Double startLatitude, Double startLongitude,
     Double endLatitude, Double endLongitude) {
 
@@ -90,7 +90,7 @@ public class ExternalUberService {
 
     return priceEstimates;
   }
-  */
+
 
   public String getStartLatitude() {
     return startLatitude;
